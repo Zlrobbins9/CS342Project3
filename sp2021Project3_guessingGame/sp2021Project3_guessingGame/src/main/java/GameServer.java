@@ -8,20 +8,17 @@ import java.util.function.Consumer;
 
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
-/*
- * Clicker: A: I really get it    B: No idea what you are talking about
- * C: kind of following
- */
 
-public class Server{
 
-    int count = 1;
+public class GameServer{
+	// TODO: create int var that keeps track of port number, make it a part of Gameserver constructor.
+    int count = 1; //TODO: rename to reflect keeping playercount
     ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
     TheServer server;
     private Consumer<Serializable> callback;
 
 
-    Server(Consumer<Serializable> call){
+    GameServer(Consumer<Serializable> call){
 
         callback = call;
         server = new TheServer();
@@ -33,7 +30,7 @@ public class Server{
 
         public void run() {
 
-            try(ServerSocket mysocket = new ServerSocket(5555);){
+            try(ServerSocket mysocket = new ServerSocket(5555);){ //TODE:change code to be able to take in number input
                 System.out.println("Server is waiting for a client!");
 
 
