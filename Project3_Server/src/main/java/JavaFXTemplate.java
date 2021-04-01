@@ -21,8 +21,7 @@ public class JavaFXTemplate extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		primaryStage.setTitle("Welcome to JavaFX");
-		primaryStage.setTitle("Welcome to JavaFX");
+		primaryStage.setTitle("Word Game Server");
 		Button help = new Button("Help");
 		Button startButton = new Button("Connect");
 		TextArea textfield1 = new TextArea("Search a server number to begin!");

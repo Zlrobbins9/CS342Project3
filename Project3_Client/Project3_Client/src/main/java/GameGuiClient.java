@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GameGuiServer extends Application  {
+public class GameGuiClient extends Application  {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Welcome to JavaFX");
