@@ -26,7 +26,7 @@ public class JavaFXTemplate extends Application {
 		primaryStage.setTitle("Word Game Server");
 		Button help = new Button("Help");
 		Button startButton = new Button("Connect");
-		TextArea textfield1 = new TextArea("Search a server number to begin!");
+		TextArea textfield1 = new TextArea("Enter a server number of your liking to begin hosting!");
 		TextField address = new TextField();
 		address.setPromptText("*Enter address here*");
 		HBox hbox = new HBox(help, textfield1);
@@ -48,7 +48,22 @@ public class JavaFXTemplate extends Application {
 
 		Scene connectingScene = new Scene(connectingbox, 700, 700);
 		
-				
+
+		TextArea log = new TextArea();
+		TextField title = new TextField("Server Log");
+		TextField currentServer = new TextField("--");
+		TextField currentTitle = new TextField("current server");
+		Button newServerbtn = new Button("host new server");
+		HBox serverTop = new HBox(title, help);
+		HBox serverBottom = new HBox(currentTitle, currentServer, newServerbtn);
+		BorderPane serverLog = new BorderPane();
+		serverLog.setCenter(log);
+		serverLog.setTop(serverTop);
+		serverLog.setBottom(serverBottom);
+
+		Scene logScene = new Scene(serverLog, 700, 700);
+
+
 		Scene scene = new Scene(new VBox(), 700,700);
 		primaryStage.setScene(connectingScene);
 		primaryStage.show();
