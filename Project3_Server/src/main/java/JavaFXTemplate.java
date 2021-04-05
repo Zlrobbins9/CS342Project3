@@ -1,5 +1,5 @@
 import javafx.application.Application;
-
+import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+// This is the JavaFXTemplate for the SERVER!
 
 public class JavaFXTemplate extends Application {
 
@@ -50,6 +52,30 @@ public class JavaFXTemplate extends Application {
 		Scene scene = new Scene(new VBox(), 700,700);
 		primaryStage.setScene(connectingScene);
 		primaryStage.show();
+		
+		startButton.setOnAction(press2->
+		{
+			Boolean isPortValid = true;
+			try {
+		        int newIP = Integer.parseInt(textfield1.getText());
+		    } catch (NumberFormatException nfe) {
+		        isPortValid = false;
+		    }
+				GameServer newServer = new GameServer(data->{
+					Platform.runLater(()->{});
+					
+					
+					primaryStage.setTitle("This is the Server");
+serverConnection = new Server(data -> {
+Platform.runLater(()->{
+listItems.getItems().add(data.toString());
+});
+
+});
+					
+});
+				});
+		});
 	}
 
 }

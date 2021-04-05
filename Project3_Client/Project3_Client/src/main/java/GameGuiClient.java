@@ -15,7 +15,6 @@ public class GameGuiClient extends Application  {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Welcome to JavaFX");
-        primaryStage.setTitle("Welcome to JavaFX");
         Button help = new Button("Help");
         Button startButton = new Button("Host Server");
         TextArea textfield1 = new TextArea("Enter a server number of your liking to begin hosting!");

@@ -1,5 +1,5 @@
 import javafx.application.Application;
-
+import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
@@ -20,6 +20,8 @@ public class JavaFXTemplate extends Application {
 	//feel free to remove the starter code from this method
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		//System.out.println(Integer.parseInt("Zacc"));
 		// TODO Auto-generated method stub
 		primaryStage.setTitle("Word Game Client");
 		Button help = new Button("Help");
@@ -50,6 +52,25 @@ public class JavaFXTemplate extends Application {
 		Scene scene = new Scene(new VBox(), 700,700);
 		primaryStage.setScene(connectingScene);
 		primaryStage.show();
+		
+		startButton.setOnAction(press2->
+		{
+			Boolean isIPValid = true;
+			try {
+		        int newIP = Integer.parseInt(textfield1.getText());
+		    } catch (NumberFormatException nfe) {
+		        isIPValid = false;
+		    }
+			if(isIPValid)
+			{
+				GameClient newClient = new GameClient(data -> {
+					Platform.runLater(()->{});
+				});
+			}else
+			{
+				System.out.println("error: invalid string for IP(?)");
+			}
+		});
 	}
 
 }

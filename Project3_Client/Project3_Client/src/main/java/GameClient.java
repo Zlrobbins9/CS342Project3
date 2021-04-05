@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 public class GameClient {
 	
 Socket socketClient;
+int portNum = 5555;
 	
 	ObjectOutputStream out;
 	ObjectInputStream in;
@@ -19,10 +20,15 @@ Socket socketClient;
 		callback = call;
 	}
 	
+	GameClient(Consumer<Serializable> call, int portNum){
+		this.portNum = portNum;
+		callback = call;
+	}
+	
 	public void run() {
 		
 		try {
-		socketClient= new Socket("127.0.0.1",5555);
+		socketClient= new Socket("127.0.0.1",portNum);
 	    out = new ObjectOutputStream(socketClient.getOutputStream());
 	    in = new ObjectInputStream(socketClient.getInputStream());
 	    socketClient.setTcpNoDelay(true);
