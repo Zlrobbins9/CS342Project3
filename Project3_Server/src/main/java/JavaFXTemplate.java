@@ -28,7 +28,7 @@ public class JavaFXTemplate extends Application {
 		Button startButton = new Button("Connect");
 		TextArea textfield1 = new TextArea("Enter a server number of your liking to begin hosting!");
 		TextField address = new TextField();
-		address.setPromptText("*Enter address here*");
+		address.setPromptText("*address will appear here*");
 		HBox hbox = new HBox(help, textfield1);
 		textfield1.setTranslateY(200);
 		hbox.setSpacing(250.0);
@@ -70,27 +70,28 @@ public class JavaFXTemplate extends Application {
 		
 		startButton.setOnAction(press2->
 		{
+			int newPort = 5555;
 			Boolean isPortValid = true;
 			try {
-		        int newIP = Integer.parseInt(textfield1.getText());
+		        newPort = Integer.parseInt(textfield1.getText());
 		    } catch (NumberFormatException nfe) {
 		        isPortValid = false;
 		    }
+			if(isPortValid)
+			{
 				GameServer newServer = new GameServer(data->{
 					Platform.runLater(()->{});
-					
-					
-					primaryStage.setTitle("This is the Server");
-serverConnection = new Server(data -> {
-Platform.runLater(()->{
-listItems.getItems().add(data.toString());
-});
-
-});
-					
-});
+				
+					}, newPort);
+				System.out.println("server added!");
+				address.setPromptText(textfield1.getText());
+			}else
+			{
+				System.out.println("error: invalid string for Port number");
+			}
+			
 				});
-		});
+		
 	}
 
 }

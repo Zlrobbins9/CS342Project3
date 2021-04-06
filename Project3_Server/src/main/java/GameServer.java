@@ -11,15 +11,15 @@ import javafx.scene.control.ListView;
 
 
 public class GameServer{
-	// TODO: create int var that keeps track of port number, make it a part of Gameserver constructor.
     int count = 1; //TODO: rename to reflect keeping playercount
+    int portNum = 5555;
     ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
     TheServer server;
     private Consumer<Serializable> callback;
 
 
-    GameServer(Consumer<Serializable> call){
-
+    GameServer(Consumer<Serializable> call, Integer portNum){
+    	this.portNum = portNum;
         callback = call;
         server = new TheServer();
         server.start();
@@ -30,14 +30,15 @@ public class GameServer{
 
         public void run() {
 
-            try(ServerSocket mysocket = new ServerSocket(5555);){ //TODE:change code to be able to take in number input
+            try(ServerSocket mysocket = new ServerSocket(portNum);){
                 System.out.println("Server is waiting for a client!");
 
-
+               //this loop adds clientThreads indefinately
                 while(true) {
-
+                	System.out.println("Server is waiting for the next client...");
                     ClientThread c = new ClientThread(mysocket.accept(), count);
-                    callback.accept("client has connected to server: " + "client #" + count);
+                    //callback.accept("client has connected to server: " + "client #" + count);
+                    System.out.println("client has connected to server: " + "client #" + count);
                     clients.add(c);
                     c.start();
 

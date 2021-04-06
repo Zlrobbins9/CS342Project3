@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.function.Consumer;
 
-public class GameClient {
+public class GameClient extends Thread{
 	
 Socket socketClient;
 int portNum = 5555;
@@ -15,10 +15,6 @@ int portNum = 5555;
 	
 	private Consumer<Serializable> callback;
 	
-	GameClient(Consumer<Serializable> call){
-	
-		callback = call;
-	}
 	
 	GameClient(Consumer<Serializable> call, int portNum){
 		this.portNum = portNum;
@@ -29,6 +25,7 @@ int portNum = 5555;
 		
 		try {
 		socketClient= new Socket("127.0.0.1",portNum);
+		System.out.println("created new socket");
 	    out = new ObjectOutputStream(socketClient.getOutputStream());
 	    in = new ObjectInputStream(socketClient.getInputStream());
 	    socketClient.setTcpNoDelay(true);

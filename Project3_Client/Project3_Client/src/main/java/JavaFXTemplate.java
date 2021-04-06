@@ -1,4 +1,4 @@
-import com.sun.security.ntlm.Client;
+//import com.sun.security.ntlm.Client;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
+@SuppressWarnings({ "unused", "restriction" })
 public class JavaFXTemplate extends Application {
 	TextArea textfield1, wordToGuess;
 	BorderPane connectingbox, categories, gameBorder, winning;
@@ -26,12 +27,13 @@ public class JavaFXTemplate extends Application {
 	TextField address, title, foodsText, animalsText, countriesText,
 			currentServerTitle, currentServerText, currentTitle, currentCategory,
 			letterToGuess, incorrect, winningTitle, category1, category2, category3;
-	VBox animalBox, foodsBox, countriesBox, currentVBox, wordGuessing;;
+	VBox animalBox, foodsBox, countriesBox, currentVBox, wordGuessing;
 	HBox hbox, overall, currentServer, top, letterGuessing, currentTop, winningWords,
 			serverConnection, winningTop;
 
 	public Scene startingScene(){
-		help = new Button("Help");
+		
+		
 		startButton = new Button("Connect");
 		textfield1 = new TextArea("Search a server number to begin!");
 		 address = new TextField();
@@ -39,7 +41,9 @@ public class JavaFXTemplate extends Application {
 		 hbox = new HBox(help, textfield1);
 		textfield1.setTranslateY(200);
 		hbox.setSpacing(250.0);
+		
 		 connectingbox = new BorderPane();
+		 
 		connectingbox.setTop(hbox);
 		connectingbox.setLeft(startButton);
 		connectingbox.setCenter(address);
@@ -54,6 +58,7 @@ public class JavaFXTemplate extends Application {
 		textfield1.setMaxWidth(200);
 
 		return new Scene(connectingbox, 700, 700);
+		
 	}
 
 	public Scene categoryScene() {
@@ -68,8 +73,10 @@ public class JavaFXTemplate extends Application {
 	foodsText = new TextField("Words Left: ");
 	animalsText = new TextField("Words Left: ");
 	countriesText = new TextField("Words Left: ");
-	currentServerTitle = new TextField("current server");
+	currentServerTitle = new TextField("current Port Number: ");
+	currentServerTitle.setEditable(false);
 		currentServerText = new TextField("current");
+		currentServerText.setEditable(false);
 	animalBox = new VBox(animals, animalsText);
 	countriesBox = new VBox(countries, countriesText);
 	foodsBox = new VBox(foods, foodsText);
@@ -85,7 +92,7 @@ public class JavaFXTemplate extends Application {
 
 	public Scene gameScene(){
 
-
+		help = new Button("Help");
 		currentTitle = new TextField("Current Category:");
 		currentCategory = new TextField("Animals");
 		letterToGuess = new TextField();
@@ -93,7 +100,7 @@ public class JavaFXTemplate extends Application {
 		wordToGuess = new TextArea("---");
 		checkLetter = new Button("check");
 		currentVBox = new VBox(currentTitle, currentCategory);
-		currentTop = new HBox(currentVBox, help);
+		currentTop = new HBox(currentVBox, help); //marked as maybe breaking
 		letterGuessing = new HBox(letterToGuess, checkLetter);
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
 		gameBorder = new BorderPane();
@@ -147,15 +154,12 @@ public class JavaFXTemplate extends Application {
 		launch(args);
 	}
 
-	//feel free to remove the starter code from this method
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		//System.out.println(Integer.parseInt("Zacc"));
-		// TODO Auto-generated method stub
 		primaryStage.setTitle("Word Game Client");
 		HashMap<String,Scene> sceneMap = new HashMap<String,Scene>();
-		sceneMap.put("game", gameScene());
+		sceneMap.put("game", gameScene()); 
 		sceneMap.put("category", categoryScene());
 		sceneMap.put("start", startingScene());
 		sceneMap.put("win", winScene());
@@ -167,22 +171,37 @@ public class JavaFXTemplate extends Application {
 		
 		startButton.setOnAction(press2->
 		{
-			Boolean isIPValid = true;
+			
+			Boolean isPortValid = true;
+			int newPort = 5555;
 			try {
-		        int newIP = Integer.parseInt(textfield1.getText());
+		        newPort = Integer.parseInt(textfield1.getText());
 		    } catch (NumberFormatException nfe) {
-		        isIPValid = false;
+		        isPortValid = false;
 		    }
-			if(isIPValid)
+			if(isPortValid)
 			{
+				primaryStage.setScene(sceneMap.get("category"));
+				primaryStage.setTitle("Client: Begin Game");
+				currentServerText.setText("" + newPort);
 				GameClient newClient = new GameClient(data -> {
 					Platform.runLater(()->{});
-				});
+				}, newPort);
+				newClient.start();
 			}else
 			{
-				System.out.println("error: invalid string for IP(?)");
+				primaryStage.setScene(sceneMap.get("category"));
+				primaryStage.setTitle("Client: Begin Game");
+				currentServerText.setText("" + 5555);
+				GameClient newClient = new GameClient(data -> {
+					Platform.runLater(()->{});
+				}, 5555);
+				System.out.println("error: invalid string for Port number, resorting to default values...");
+				newClient.start();
 			}
+			
 		});
 	}
+	
 
 }
