@@ -30,21 +30,26 @@ int portNum = 5555;
 	    in = new ObjectInputStream(socketClient.getInputStream());
 	    socketClient.setTcpNoDelay(true);
 		}
-		catch(Exception e) {}
-		
-		while(true) {
-			 
-			try {
-			String message = in.readObject().toString();
-			callback.accept(message);
-			}
-			catch(Exception e) {}
+		catch(Exception e) {
+			System.out.println("Client socket did not launch");
 		}
+
+		try {
+			while (true) {
+				SerializableInfo message = (SerializableInfo) in.readObject();
+				callback.accept(message);
+			}
+		} catch(Exception e) {
+			SerializableInfo message = new SerializableInfo();
+			message.connectionFail = true;
+			callback.accept(message);
+			System.out.println("Client Connection Fail");
+		}
+
 	
     }
 	
-	public void send(String data) {
-		
+	public void send(SerializableInfo data) {
 		try {
 			out.writeObject(data);
 		} catch (IOException e) {
