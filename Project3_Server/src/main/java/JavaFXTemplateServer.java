@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 // This is the JavaFXTemplate for the SERVER!
 
-public class JavaFXTemplate extends Application {
+public class JavaFXTemplateServer extends Application {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

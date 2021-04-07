@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 
 @SuppressWarnings({ "unused", "restriction" })
-public class JavaFXTemplate extends Application {
+public class JavaFXTemplateClient extends Application {
 	TextArea textfield1, wordToGuess;
 	BorderPane connectingbox, categories, gameBorder, winning;
 	Button help, startButton, foods, animals, countries, newServer, checkLetter,
