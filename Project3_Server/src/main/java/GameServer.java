@@ -61,6 +61,7 @@ public class GameServer{
 
         Socket connection;
         int count;
+        ServerGameManager thisGameManager = new ServerGameManager();
         ObjectInputStream in;
         ObjectOutputStream out;
 
@@ -69,7 +70,7 @@ public class GameServer{
             this.count = count;
         }
 
-        public void updateClients(SerializableInfo message) {
+        public void updateClients(UpdatePack message) {
                 try {
                     this.out.writeObject(message);
                 }
@@ -92,14 +93,22 @@ public class GameServer{
                 try {
                     UpdatePack data = (UpdatePack) in.readObject();
                     
-
-                    callback.accept("client: " + count + " sent: " + data);
-                    updateClients("client #"+count+" selected: "+data.categoryChosen);
-
+                    if(data.categoryChosen != "none" && thisGameManager.sendingPack.categoryChosen == "none")//the client has chosen a category
+                    {
+                    	thisGameManager.sendingPack.categoryChosen = data.categoryChosen;
+                    	thisGameManager.decodedWord = thisGameManager.getWord(thisGameManager.CategoryMap.get(data.categoryChosen));
+                    	thisGameManager.encodeDecodedWord();
+                    	try {
+                    	out.writeObject(thisGameManager.sendingPack);
+                    	}catch(Exception e) {}
+                    }
+                    //callback.accept("client: " + count + " sent: " + data);
+                    
+                    //updateClients("client #"+count+" selected: "+data.categoryChosen);
                 }
                 catch(Exception e) {
                     callback.accept("OOOOPPs...Something wrong with the socket from client: " + count + "....closing down!");
-                    updateClients("Client #"+count+" has left the server!");
+                    //updateClients("Client #"+count+" has left the server!");
                     clients.remove(this);
                     break;
                 }

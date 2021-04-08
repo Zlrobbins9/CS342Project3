@@ -5,9 +5,11 @@ import java.util.*;
 
 public class ServerGameManager{
 
-		String infoCategories;
-	    String decodedword;
-	    int resetSignal;
+
+
+	    public ArrayList<Integer> letterPos;
+	    
+	    String decodedWord;
 	    char guess;
 	    public static Random RNG = new Random();
 	    
@@ -40,15 +42,7 @@ public class ServerGameManager{
 	    	
 	    	if(!checkLetterExists(sendingPack.encodedWord,'_'))
 	    	{
-	    		char[] tempWord = sendingPack.encodedWord.toCharArray();
-	    		for(int i = 0; i < tempWord.length; i++) 
-	    		{
-	                if(tempWord[i] != ' ') 
-	                {
-	                	tempWord[i] = '_';
-	                }
-	            }
-	    		sendingPack.encodedWord = String.valueOf(tempWord);
+	    		
 	    	}
 	    }
 
@@ -57,6 +51,19 @@ public class ServerGameManager{
 	    {
 	        int index = RNG.nextInt(myCategory.size() - 1);
 	        return myCategory.get(index);
+	    }
+	    
+	    public void encodeDecodedWord()
+	    {
+	    	char[] tempWord = decodedWord.toCharArray();
+    		for(int i = 0; i < tempWord.length; i++) 
+    		{
+                if(tempWord[i] != ' ') 
+                {
+                	tempWord[i] = '_';
+                }
+            }
+    		sendingPack.encodedWord = String.valueOf(tempWord);
 	    }
 
 	    // Checks if the letter exists in the word

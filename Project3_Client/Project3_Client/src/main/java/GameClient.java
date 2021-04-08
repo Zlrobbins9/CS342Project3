@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.function.Consumer;
 
 public class GameClient extends Thread{
-	
+	UpdatePack clientPack;
 Socket socketClient;
 int portNum = 5555;
 	
@@ -25,6 +25,7 @@ int portNum = 5555;
 		
 		try {
 		socketClient= new Socket("127.0.0.1",portNum);
+		clientPack = new UpdatePack();
 		System.out.println("created new socket");
 	    out = new ObjectOutputStream(socketClient.getOutputStream());
 	    in = new ObjectInputStream(socketClient.getInputStream());
@@ -36,11 +37,11 @@ int portNum = 5555;
 
 		try {
 			while (true) {
-				SerializableInfo message = (SerializableInfo) in.readObject();
+				UpdatePack message = (UpdatePack) in.readObject();
 				callback.accept(message);
 			}
 		} catch(Exception e) {
-			SerializableInfo message = new SerializableInfo();
+			UpdatePack message = new UpdatePack();
 			message.connectionFail = true;
 			callback.accept(message);
 			System.out.println("Client Connection Fail");

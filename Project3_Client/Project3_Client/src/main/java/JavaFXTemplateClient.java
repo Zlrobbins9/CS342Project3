@@ -202,7 +202,18 @@ public class JavaFXTemplateClient extends Application {
 				newClient.start();
 			}
 			
-			//foods.setOnAction(e->{newClient.send(new ZaccPack(c1.getText(), "And zacc!")); c1.clear();});
+			foods.setOnAction(e->{
+				newClient.clientPack.categoryChosen = "Food";
+				newClient.send(newClient.clientPack);
+				});
+			animals.setOnAction(e->{
+				newClient.clientPack.categoryChosen = "Animals";
+				newClient.send(newClient.clientPack);
+				});
+			countries.setOnAction(e->{
+				newClient.clientPack.categoryChosen = "Countries";
+				newClient.send(newClient.clientPack);
+				});
 			
 		});
 	}
