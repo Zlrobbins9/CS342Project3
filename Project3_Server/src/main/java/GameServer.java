@@ -69,14 +69,11 @@ public class GameServer{
             this.count = count;
         }
 
-        public void updateClients(String message) {
-            for(int i = 0; i < clients.size(); i++) {
-                ClientThread t = clients.get(i);
+        public void updateClients(SerializableInfo message) {
                 try {
-                    t.out.writeObject(message);
+                    this.out.writeObject(message);
                 }
                 catch(Exception e) {}
-            }
         }
 
         public void run(){
@@ -87,15 +84,15 @@ public class GameServer{
                 connection.setTcpNoDelay(true);
             }
             catch(Exception e) {
-                System.out.println("Streams not open");
+                callback.accept("Streams not open");
             }
 
-            updateClients("new client on server: client #"+count);
 
             while(true) {
                 try {
                     UpdatePack data = (UpdatePack) in.readObject();
                     
+
                     callback.accept("client: " + count + " sent: " + data);
                     updateClients("client #"+count+" selected: "+data.categoryChosen);
 
