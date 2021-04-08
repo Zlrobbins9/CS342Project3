@@ -3,6 +3,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -43,7 +44,7 @@ public class JavaFXTemplateServer extends Application {
 		Scene connectingScene = new Scene(connectingbox, 700, 700);
 		
 
-		TextArea log = new TextArea();
+		ListView<String> log = new ListView<String>();
 		TextField title = new TextField("Server Log");
 		TextField currentServer = new TextField();
 		TextField currentTitle = new TextField("current server");
@@ -74,7 +75,9 @@ public class JavaFXTemplateServer extends Application {
 			if(isPortValid)
 			{
 				GameServer newServer = new GameServer(data->{
-					Platform.runLater(()->{});
+					Platform.runLater(()->{
+						log.getItems().add(data.toString());
+					});
 				
 					}, newPort);
 				System.out.println("server added!");

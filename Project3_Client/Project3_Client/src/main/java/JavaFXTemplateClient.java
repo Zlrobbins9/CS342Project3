@@ -23,7 +23,7 @@ public class JavaFXTemplateClient extends Application {
 	TextArea textfield1, wordToGuess, title;
 	BorderPane connectingbox, categories, gameBorder, winning;
 	Button help, startButton, foods, animals, countries, newServer, newServer2, checkLetter,
-			findNewServer, sameServer;
+			findNewServer, sameServer, wordStart, startWordGame;
 	TextField address, foodsText, animalsText, countriesText,
 			currentServerTitle, currentServerTitle2, currentServerText, currentServerText2, currentTitle, currentCategory,
 			letterToGuess, incorrect, winningTitle, category1, category2, category3;
@@ -101,6 +101,7 @@ public class JavaFXTemplateClient extends Application {
 
 	public Scene gameScene(){
 
+		startWordGame = new Button("Generate Word");
 		help = new Button("Help");
 		currentTitle = new TextField("Current Category:");
 		currentTitle.setEditable(false);
@@ -112,7 +113,7 @@ public class JavaFXTemplateClient extends Application {
 		checkLetter = new Button("check");
 		currentVBox = new VBox(currentTitle, currentCategory);
 		currentTop = new HBox(currentVBox, help); //marked as maybe breaking
-		letterGuessing = new HBox(letterToGuess, checkLetter);
+		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame);
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
 		wordGuessing.setSpacing(50);
 		newServer = new Button("Join new server");
@@ -251,13 +252,20 @@ public class JavaFXTemplateClient extends Application {
 			});
 		countries.setOnAction(e->{
 			newClient.clientPack.categoryChosen = "Countries"; //does NOT cause nullptr exception
-			newClient.send(newClient.clientPack); 
+			
 			System.out.println("at this point encoded word is: " + newClient.clientPack.encodedWord);
-			wordToGuess.setText(newClient.clientPack.encodedWord); //however, this prints out the wrong thing
+			
 			primaryStage.setScene(sceneMap.get("game"));
+			//newClient.send(newClient.clientPack); 
 			currentServerText2.setText(textfield1.getText());
 			currentCategory.setText("Countries");
 			});
+		
+		startWordGame.setOnAction(e -> {
+			newClient.send(newClient.clientPack);
+			wordToGuess.setText(newClient.clientPack.encodedWord);
+			
+		});
 	}
 	
 	

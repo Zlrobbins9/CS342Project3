@@ -95,6 +95,7 @@ public class GameServer{
                     
                     if(data.categoryChosen != "none" && thisGameManager.sendingPack.categoryChosen == "none")//the client has chosen a category
                     {
+                    	callback.accept("the category chosen by client " + count + " was " + data.categoryChosen);
                     	thisGameManager.sendingPack.categoryChosen = data.categoryChosen;
                     	System.out.println("the category chosen by client " + count + " was " + thisGameManager.sendingPack.categoryChosen);
                     	thisGameManager.decodedWord = thisGameManager.getWord(thisGameManager.CategoryMap.get(data.categoryChosen));
