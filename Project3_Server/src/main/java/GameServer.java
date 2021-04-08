@@ -96,10 +96,14 @@ public class GameServer{
                     if(data.categoryChosen != "none" && thisGameManager.sendingPack.categoryChosen == "none")//the client has chosen a category
                     {
                     	thisGameManager.sendingPack.categoryChosen = data.categoryChosen;
+                    	System.out.println("the category chosen by client " + count + " was " + thisGameManager.sendingPack.categoryChosen);
                     	thisGameManager.decodedWord = thisGameManager.getWord(thisGameManager.CategoryMap.get(data.categoryChosen));
                     	thisGameManager.encodeDecodedWord();
+                    	System.out.println("encoded word is: " + thisGameManager.sendingPack.encodedWord + ", decoded word is " + thisGameManager.decodedWord);
                     	try {
                     	out.writeObject(thisGameManager.sendingPack);
+                    	out.flush();
+                    	out.reset();
                     	}catch(Exception e) {}
                     }
                     //callback.accept("client: " + count + " sent: " + data);

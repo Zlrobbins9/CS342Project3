@@ -22,6 +22,7 @@ public class UpdatePack implements Serializable {
 
     public boolean connectionFail;
     public boolean replayRequest;
+    
 	
 	
 	

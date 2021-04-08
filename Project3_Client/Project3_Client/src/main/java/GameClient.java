@@ -37,8 +37,9 @@ int portNum = 5555;
 
 		try {
 			while (true) {
-				UpdatePack message = (UpdatePack) in.readObject();
-				callback.accept(message);
+				clientPack = (UpdatePack) in.readObject();
+				System.out.println(clientPack.encodedWord);
+				//callback.accept(message);
 			}
 		} catch(Exception e) {
 			UpdatePack message = new UpdatePack();
@@ -55,6 +56,8 @@ int portNum = 5555;
 		
 		try {
 			out.writeObject(data);
+			out.flush();
+        	out.reset();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

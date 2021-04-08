@@ -10,8 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-// This is the JavaFXTemplate for the SERVER!
-
 public class JavaFXTemplateServer extends Application {
 
 	public static void main(String[] args) {

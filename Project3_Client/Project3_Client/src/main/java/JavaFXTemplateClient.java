@@ -70,7 +70,7 @@ public class JavaFXTemplateClient extends Application {
 	foods = new Button("Food");
 	animals = new Button("Animals");
 	countries = new Button("Countries");
-	Button newServer2 = new Button("Join new server");
+	newServer2 = new Button("Join new server");
 	title = new TextArea("Word Game! Please choose a category");
 	title.setMaxHeight(20);
 	title.setMaxWidth(240);
@@ -78,9 +78,9 @@ public class JavaFXTemplateClient extends Application {
 	foodsText = new TextField("Words Left: ");
 	animalsText = new TextField("Words Left: ");
 	countriesText = new TextField("Words Left: ");
-	TextField currentServerTitle2 = new TextField("current Port Number: ");
+	currentServerTitle2 = new TextField("current Port Number: ");
 	currentServerTitle2.setEditable(false);
-		TextField currentServerText2 = new TextField();
+	currentServerText2 = new TextField();
 	animalBox = new VBox(animals, animalsText);
 	countriesBox = new VBox(countries, countriesText);
 	foodsBox = new VBox(foods, foodsText);
@@ -89,7 +89,7 @@ public class JavaFXTemplateClient extends Application {
 	countriesBox.setSpacing(20);
 	foodsBox.setSpacing(20);
 	overall.setSpacing(100);
-	HBox currentServer2 = new HBox(currentServerTitle2, currentServerText2, newServer2);
+	currentServer2 = new HBox(currentServerTitle2, currentServerText2, newServer2);
 	categories = new BorderPane();
 	categories.setTop(top);
 	categories.setCenter(overall);
@@ -127,6 +127,9 @@ public class JavaFXTemplateClient extends Application {
 		gameBorder.setBottom(currentServer);
 
 		return new Scene(gameBorder, 700, 700);
+		
+		
+		
 
 	}
 
@@ -145,7 +148,7 @@ public class JavaFXTemplateClient extends Application {
 		winning.setTop(winningTop);
 		winning.setCenter(winningWords);
 		winning.setBottom(serverConnection);
-
+		
 		return new Scene(winning, 700, 700);
 	}
 
@@ -219,24 +222,9 @@ public class JavaFXTemplateClient extends Application {
 				System.out.println("error: invalid string for Port number, resorting to default values...");
 				newClient.start();
 			}
-			
-			foods.setOnAction(e->{
-				newClient.clientPack.categoryChosen = "Food";
-				newClient.send(newClient.clientPack);
-				});
-			animals.setOnAction(e->{
-				newClient.clientPack.categoryChosen = "Animals";
-				newClient.send(newClient.clientPack);
-				});
-			countries.setOnAction(e->{
-				newClient.clientPack.categoryChosen = "Countries";
-				newClient.send(newClient.clientPack);
-				primaryStage.setScene(sceneMap.get("game"));
-				currentServerText2.setText(textfield1.getText());
-				currentCategory.setText("Countries");
-				});
-			
 		});
+		
+		
 
 		newServer.setOnAction(e -> {
 			primaryStage.setScene(sceneMap.get("start"));
@@ -244,7 +232,36 @@ public class JavaFXTemplateClient extends Application {
 			textfield1.setPromptText("Search a server number to begin!");
 			address.setPromptText("*address will appear here*");
 		});
+		
+		foods.setOnAction(e->{
+			newClient.clientPack.categoryChosen = "Food"; //does NOT cause nullptr
+			newClient.send(newClient.clientPack); 
+			wordToGuess.setText(newClient.clientPack.encodedWord); //however, this prints out the wrong thing
+			primaryStage.setScene(sceneMap.get("game"));
+			currentServerText2.setText(textfield1.getText());
+			currentCategory.setText("Foods");
+			});
+		animals.setOnAction(e->{
+			newClient.clientPack.categoryChosen = "Animals"; //causing nullptr exception
+			newClient.send(newClient.clientPack);
+			wordToGuess.setText(newClient.clientPack.encodedWord);
+			primaryStage.setScene(sceneMap.get("game"));
+			currentServerText2.setText(textfield1.getText());
+			currentCategory.setText("Animals");
+			});
+		countries.setOnAction(e->{
+			newClient.clientPack.categoryChosen = "Countries"; //does NOT cause nullptr exception
+			newClient.send(newClient.clientPack); 
+			System.out.println("at this point encoded word is: " + newClient.clientPack.encodedWord);
+			wordToGuess.setText(newClient.clientPack.encodedWord); //however, this prints out the wrong thing
+			primaryStage.setScene(sceneMap.get("game"));
+			currentServerText2.setText(textfield1.getText());
+			currentCategory.setText("Countries");
+			});
 	}
+	
+	
+	
 	
 
 }
