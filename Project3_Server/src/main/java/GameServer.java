@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 import javafx.application.Platform;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListView;
 public class GameServer{
     int count = 1; //TODO: rename to reflect keeping playercount
     int portNum = 5555;
+    HashMap<ClientThread, ServerGameManager> clientMap = new HashMap<ClientThread, ServerGameManager>();
     ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
     TheServer server;
     private Consumer<Serializable> callback;
@@ -40,6 +42,7 @@ public class GameServer{
                     //callback.accept("client has connected to server: " + "client #" + count);
                     System.out.println("client has connected to server: " + "client #" + count);
                     clients.add(c);
+                    clientMap.put(c, new ServerGameManager());
                     c.start();
 
                     count++;
@@ -91,9 +94,10 @@ public class GameServer{
 
             while(true) {
                 try {
-                    String data = in.readObject().toString();
+                    UpdatePack data = (UpdatePack) in.readObject();
+                    
                     callback.accept("client: " + count + " sent: " + data);
-                    updateClients("client #"+count+" said: "+data);
+                    updateClients("client #"+count+" selected: "+data.categoryChosen);
 
                 }
                 catch(Exception e) {

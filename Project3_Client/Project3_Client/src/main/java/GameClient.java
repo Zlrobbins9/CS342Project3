@@ -43,7 +43,7 @@ int portNum = 5555;
 	
     }
 	
-	public void send(String data) {
+	public void send(UpdatePack data) {
 		
 		try {
 			out.writeObject(data);

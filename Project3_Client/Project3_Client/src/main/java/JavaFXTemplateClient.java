@@ -31,6 +31,8 @@ public class JavaFXTemplateClient extends Application {
 	HBox hbox, overall, currentServer, top, letterGuessing, currentTop, winningWords,
 			serverConnection, winningTop;
 
+	GameClient newClient;
+	
 	public Scene startingScene(){
 		
 		
@@ -184,7 +186,7 @@ public class JavaFXTemplateClient extends Application {
 				primaryStage.setScene(sceneMap.get("category"));
 				primaryStage.setTitle("Client: Begin Game");
 				currentServerText.setText("" + newPort);
-				GameClient newClient = new GameClient(data -> {
+				newClient = new GameClient(data -> {
 					Platform.runLater(()->{});
 				}, newPort);
 				newClient.start();
@@ -199,6 +201,8 @@ public class JavaFXTemplateClient extends Application {
 				System.out.println("error: invalid string for Port number, resorting to default values...");
 				newClient.start();
 			}
+			
+			//foods.setOnAction(e->{newClient.send(new ZaccPack(c1.getText(), "And zacc!")); c1.clear();});
 			
 		});
 	}
