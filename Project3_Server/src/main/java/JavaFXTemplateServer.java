@@ -26,23 +26,19 @@ public class JavaFXTemplateServer extends Application {
 		primaryStage.setTitle("Word Game Server");
 		Button help = new Button("Help");
 		Button startButton = new Button("Connect");
-		TextArea textfield1 = new TextArea("Enter a server number of your liking to begin hosting!");
 		TextField address = new TextField();
 		address.setPromptText("*address will appear here*");
-		HBox hbox = new HBox(help, textfield1);
-		textfield1.setTranslateY(200);
-		hbox.setSpacing(250.0);
+		TextArea textfield1 = new TextArea();
+		textfield1.setPromptText("Enter a server number of your liking to begin hosting!");
 		BorderPane connectingbox = new BorderPane();
-		connectingbox.setTop(hbox);
+		connectingbox.setTop(textfield1);
 		connectingbox.setLeft(startButton);
 		connectingbox.setCenter(address);
-		//connectingbox.setRight(textfield1);
-		help.setTranslateX(50);
 		address.setMaxWidth(200);
-		//address.setTranslateX(50);
 		startButton.setTranslateY(400);
 		startButton.setTranslateX(350);
-		//textfield1.setTranslateY(200);
+		textfield1.setTranslateY(200);
+		textfield1.setTranslateX(275);
 		textfield1.setMaxHeight(50);
 		textfield1.setMaxWidth(200);
 
@@ -51,7 +47,7 @@ public class JavaFXTemplateServer extends Application {
 
 		TextArea log = new TextArea();
 		TextField title = new TextField("Server Log");
-		TextField currentServer = new TextField("--");
+		TextField currentServer = new TextField();
 		TextField currentTitle = new TextField("current server");
 		Button newServerbtn = new Button("host new server");
 		HBox serverTop = new HBox(title, help);
@@ -85,12 +81,21 @@ public class JavaFXTemplateServer extends Application {
 					}, newPort);
 				System.out.println("server added!");
 				address.setPromptText(textfield1.getText());
+				primaryStage.setScene(logScene);
+				currentServer.setText(textfield1.getText());
 			}else
 			{
 				System.out.println("error: invalid string for Port number");
 			}
 			
 				});
+
+		newServerbtn.setOnAction(e -> {
+			primaryStage.setScene(connectingScene);
+			textfield1.setText("");
+			textfield1.setPromptText("Enter a server number of your liking to begin hosting!");
+			address.setPromptText("*address will appear here*");
+		});
 		
 	}
 

@@ -25,11 +25,11 @@ public class ServerGameManager{
 	    	
 	    	CategoryMap.put("Food", new ArrayList<>(
 	                Arrays.asList("egg", "cereal", "banana", "grape", "rice",
-	                        "chicken", "yogurt", "pancake","cucumber", "butter", "tacos")));
+	                        "chicken", "yogurt", "pancake","cucumber", "burger", "taco", "pasta")));
 	    	
 	    	CategoryMap.put("Countries", new ArrayList<>(
-	                Arrays.asList("America", "Chile", "Cuba", "China", "Sweden",
-	                        "Greenland", "Germany", "Mexico", "Palestine", "India", "Chad")));
+	                Arrays.asList("america", "chile", "cuba", "china", "sweden",
+	                        "greenland", "germany", "mexico", "palestine", "india", "thailand", "britain")));
 	    }
 	    
 	    

@@ -20,15 +20,15 @@ import java.util.HashMap;
 
 @SuppressWarnings({ "unused", "restriction" })
 public class JavaFXTemplateClient extends Application {
-	TextArea textfield1, wordToGuess;
+	TextArea textfield1, wordToGuess, title;
 	BorderPane connectingbox, categories, gameBorder, winning;
-	Button help, startButton, foods, animals, countries, newServer, checkLetter,
+	Button help, startButton, foods, animals, countries, newServer, newServer2, checkLetter,
 			findNewServer, sameServer;
-	TextField address, title, foodsText, animalsText, countriesText,
-			currentServerTitle, currentServerText, currentTitle, currentCategory,
+	TextField address, foodsText, animalsText, countriesText,
+			currentServerTitle, currentServerTitle2, currentServerText, currentServerText2, currentTitle, currentCategory,
 			letterToGuess, incorrect, winningTitle, category1, category2, category3;
 	VBox animalBox, foodsBox, countriesBox, currentVBox, wordGuessing;
-	HBox hbox, overall, currentServer, top, letterGuessing, currentTop, winningWords,
+	HBox hbox, overall, currentServer, currentServer2, top, letterGuessing, currentTop, winningWords,
 			serverConnection, winningTop;
 
 	GameClient newClient;
@@ -37,11 +37,12 @@ public class JavaFXTemplateClient extends Application {
 		
 		
 		startButton = new Button("Connect");
-		textfield1 = new TextArea("Search a server number to begin!");
+		textfield1 = new TextArea();
+		textfield1.setPromptText("Search a server number to begin!");
 		 address = new TextField();
-		address.setPromptText("*Enter address here*");
+		address.setPromptText("*address will appear here*");
 		 hbox = new HBox(help, textfield1);
-		textfield1.setTranslateY(200);
+		//textfield1.setTranslateY(200);
 		hbox.setSpacing(250.0);
 		
 		 connectingbox = new BorderPane();
@@ -49,13 +50,13 @@ public class JavaFXTemplateClient extends Application {
 		connectingbox.setTop(hbox);
 		connectingbox.setLeft(startButton);
 		connectingbox.setCenter(address);
-		//connectingbox.setRight(textfield1);
 		help.setTranslateX(50);
 		address.setMaxWidth(200);
 		//address.setTranslateX(50);
 		startButton.setTranslateY(400);
 		startButton.setTranslateX(350);
-		//textfield1.setTranslateY(200);
+		textfield1.setTranslateY(200);
+		textfield1.setTranslateX(275);
 		textfield1.setMaxHeight(50);
 		textfield1.setMaxWidth(200);
 
@@ -69,25 +70,31 @@ public class JavaFXTemplateClient extends Application {
 	foods = new Button("Food");
 	animals = new Button("Animals");
 	countries = new Button("Countries");
-	newServer = new Button("Join new server");
-	title = new TextField("WORD GAME\n Please choose a category");
+	Button newServer2 = new Button("Join new server");
+	title = new TextArea("Word Game! Please choose a category");
+	title.setMaxHeight(20);
+	title.setMaxWidth(240);
 	top = new HBox(title, help);
 	foodsText = new TextField("Words Left: ");
 	animalsText = new TextField("Words Left: ");
 	countriesText = new TextField("Words Left: ");
-	currentServerTitle = new TextField("current Port Number: ");
-	currentServerTitle.setEditable(false);
-		currentServerText = new TextField("current");
-		currentServerText.setEditable(false);
+	TextField currentServerTitle2 = new TextField("current Port Number: ");
+	currentServerTitle2.setEditable(false);
+		TextField currentServerText2 = new TextField();
 	animalBox = new VBox(animals, animalsText);
 	countriesBox = new VBox(countries, countriesText);
 	foodsBox = new VBox(foods, foodsText);
 	overall = new HBox(animalBox, foodsBox, countriesBox);
-	currentServer = new HBox(currentServerTitle, currentServerText, newServer);
+	animalBox.setSpacing(20);
+	countriesBox.setSpacing(20);
+	foodsBox.setSpacing(20);
+	overall.setSpacing(100);
+	HBox currentServer2 = new HBox(currentServerTitle2, currentServerText2, newServer2);
 	categories = new BorderPane();
 	categories.setTop(top);
 	categories.setCenter(overall);
-	categories.setBottom(currentServer);
+	categories.setBottom(currentServer2);
+	overall.setTranslateY(250);
 
 	return new Scene(categories, 700, 700);
 	}
@@ -96,15 +103,24 @@ public class JavaFXTemplateClient extends Application {
 
 		help = new Button("Help");
 		currentTitle = new TextField("Current Category:");
-		currentCategory = new TextField("Animals");
+		currentTitle.setEditable(false);
+		currentCategory = new TextField();
 		letterToGuess = new TextField();
 		incorrect = new TextField("Incorrect: \n");
-		wordToGuess = new TextArea("---");
+		wordToGuess = new TextArea("");
+		wordToGuess.setMinHeight(300);
 		checkLetter = new Button("check");
 		currentVBox = new VBox(currentTitle, currentCategory);
 		currentTop = new HBox(currentVBox, help); //marked as maybe breaking
 		letterGuessing = new HBox(letterToGuess, checkLetter);
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
+		wordGuessing.setSpacing(50);
+		newServer = new Button("Join new server");
+		currentServerTitle = new TextField("current Port Number: ");
+		currentServerTitle.setEditable(false);
+		currentServerText = new TextField();
+		currentServerText.setEditable(false);
+		currentServer = new HBox(currentServerTitle, currentServerText, newServer);
 		gameBorder = new BorderPane();
 		gameBorder.setTop(currentTop);
 		gameBorder.setCenter(wordGuessing);
@@ -170,12 +186,14 @@ public class JavaFXTemplateClient extends Application {
 		Scene scene = new Scene(new VBox(), 700,700);
 		primaryStage.setScene(sceneMap.get("start"));
 		primaryStage.show();
-		
+
+
 		startButton.setOnAction(press2->
 		{
 			
 			Boolean isPortValid = true;
 			int newPort = 5555;
+
 			try {
 		        newPort = Integer.parseInt(textfield1.getText());
 		    } catch (NumberFormatException nfe) {
@@ -185,7 +203,7 @@ public class JavaFXTemplateClient extends Application {
 			{
 				primaryStage.setScene(sceneMap.get("category"));
 				primaryStage.setTitle("Client: Begin Game");
-				currentServerText.setText("" + newPort);
+				currentServerText2.setText("" + newPort);
 				newClient = new GameClient(data -> {
 					Platform.runLater(()->{});
 				}, newPort);
@@ -194,7 +212,7 @@ public class JavaFXTemplateClient extends Application {
 			{
 				primaryStage.setScene(sceneMap.get("category"));
 				primaryStage.setTitle("Client: Begin Game");
-				currentServerText.setText("" + 5555);
+				currentServerText2.setText("" + 5555);
 				GameClient newClient = new GameClient(data -> {
 					Platform.runLater(()->{});
 				}, 5555);
@@ -213,8 +231,18 @@ public class JavaFXTemplateClient extends Application {
 			countries.setOnAction(e->{
 				newClient.clientPack.categoryChosen = "Countries";
 				newClient.send(newClient.clientPack);
+				primaryStage.setScene(sceneMap.get("game"));
+				currentServerText2.setText(textfield1.getText());
+				currentCategory.setText("Countries");
 				});
 			
+		});
+
+		newServer.setOnAction(e -> {
+			primaryStage.setScene(sceneMap.get("start"));
+			textfield1.setText("");
+			textfield1.setPromptText("Search a server number to begin!");
+			address.setPromptText("*address will appear here*");
 		});
 	}
 	
