@@ -1,14 +1,14 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 //add titles "Zacc and Nurs Word Guessing Game" maybe add client or server
@@ -26,7 +26,7 @@ public class JavaFXTemplateServer extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		primaryStage.setTitle("Word Game Server");
-		Button helpBtn = new Button("Help");
+		Button help = new Button("Help");
 		Button startButton = new Button("Connect");
 		TextField address = new TextField();
 		address.setPromptText("*address will appear here*");
@@ -35,7 +35,6 @@ public class JavaFXTemplateServer extends Application {
 		BorderPane connectingbox = new BorderPane();
 		connectingbox.setTop(textfield1);
 		connectingbox.setLeft(startButton);
-		connectingbox.setRight(helpBtn);
 		connectingbox.setCenter(address);
 		address.setMaxWidth(200);
 		startButton.setTranslateY(400);
@@ -44,26 +43,22 @@ public class JavaFXTemplateServer extends Application {
 		textfield1.setTranslateX(275);
 		textfield1.setMaxHeight(50);
 		textfield1.setMaxWidth(200);
-		connectingbox.setBackground(new Background(new BackgroundFill(
-				Color.LAVENDERBLUSH, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		Scene connectingScene = new Scene(connectingbox, 700, 700);
 		
 
 		ListView<String> log = new ListView<String>();
-		Button help2 = new Button("Help");
 		TextField title = new TextField("Server Log");
 		TextField currentServer = new TextField();
 		TextField currentTitle = new TextField("current server");
 		Button newServerbtn = new Button("host new server");
-		//HBox serverTop = new HBox(title);
+		HBox serverTop = new HBox(title, help);
 		HBox serverBottom = new HBox(currentTitle, currentServer, newServerbtn);
 		BorderPane serverLog = new BorderPane();
 		serverLog.setCenter(log);
-		serverLog.setTop(title);
+		serverLog.setTop(serverTop);
 		serverLog.setBottom(serverBottom);
-		serverLog.setRight(help2);
-		serverLog.setBackground(new Background(new BackgroundFill(
-				Color.MIDNIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		Scene logScene = new Scene(serverLog, 700, 700);
 
 

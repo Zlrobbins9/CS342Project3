@@ -3,38 +3,41 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.HashMap;
 
 @SuppressWarnings({ "unused", "restriction" })
 public class JavaFXTemplateClient extends Application {
 	TextArea textfield1, wordToGuess, title;
 	BorderPane connectingbox, categories, gameBorder, winning;
+<<<<<<< HEAD
 	Button helpBtn1, helpBtn2, helpBtn3, helpBtn4, helpBtn5, startButton, foods, animals, countries, newServer, newServer2, checkLetter,
 			findNewServer, sameServer, wordStart, startWordGame, testingWin, testingLose;
+=======
+	Button help, startButton, foods, animals, countries, newServer, newServer2, checkLetter,
+			findNewServer, sameServer, wordStart, startWordGame;
+>>>>>>> parent of c21c085 (GUI updates)
 	TextField address, foodsText, animalsText, countriesText,
 			currentServerTitle, currentServerTitle2, currentServerText, currentServerText2, currentTitle, currentCategory,
 			letterToGuess, incorrect, winningTitle, category1, category2, category3;
 	VBox animalBox, foodsBox, countriesBox, currentVBox, wordGuessing;
-	HBox overall, currentServer, currentServer2, letterGuessing, winningWords,
-			serverConnection;
+	HBox hbox, overall, currentServer, currentServer2, top, letterGuessing, currentTop, winningWords,
+			serverConnection, winningTop;
 
 	GameClient newClient;
-
-
+	
 	public Scene startingScene(){
 		
 		
@@ -42,17 +45,17 @@ public class JavaFXTemplateClient extends Application {
 		textfield1 = new TextArea();
 		textfield1.setPromptText("Search a server number to begin!");
 		 address = new TextField();
-		 helpBtn1 = new Button("Help");
 		address.setPromptText("*address will appear here*");
+		 hbox = new HBox(help, textfield1);
 		//textfield1.setTranslateY(200);
+		hbox.setSpacing(250.0);
 		
 		 connectingbox = new BorderPane();
 		 
-		connectingbox.setTop(textfield1);
+		connectingbox.setTop(hbox);
 		connectingbox.setLeft(startButton);
 		connectingbox.setCenter(address);
-		connectingbox.setRight(helpBtn1);
-		//helpBtn1.setTranslateX(50);
+		help.setTranslateX(50);
 		address.setMaxWidth(200);
 		//address.setTranslateX(50);
 		startButton.setTranslateY(400);
@@ -61,8 +64,7 @@ public class JavaFXTemplateClient extends Application {
 		textfield1.setTranslateX(275);
 		textfield1.setMaxHeight(50);
 		textfield1.setMaxWidth(200);
-		connectingbox.setBackground(new Background(new BackgroundFill(
-				Color.LAVENDERBLUSH, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		return new Scene(connectingbox, 700, 700);
 		
 	}
@@ -73,11 +75,11 @@ public class JavaFXTemplateClient extends Application {
 	foods = new Button("Food");
 	animals = new Button("Animals");
 	countries = new Button("Countries");
-	helpBtn2 = new Button("Help");
 	newServer2 = new Button("Join new server");
 	title = new TextArea("Word Game! Please choose a category");
 	title.setMaxHeight(20);
 	title.setMaxWidth(240);
+	top = new HBox(title, help);
 	foodsText = new TextField("Words Left: ");
 	animalsText = new TextField("Words Left: ");
 	countriesText = new TextField("Words Left: ");
@@ -94,41 +96,38 @@ public class JavaFXTemplateClient extends Application {
 	overall.setSpacing(100);
 	currentServer2 = new HBox(currentServerTitle2, currentServerText2, newServer2);
 	categories = new BorderPane();
-	categories.setTop(title);
+	categories.setTop(top);
 	categories.setCenter(overall);
 	categories.setBottom(currentServer2);
-	categories.setRight(helpBtn2);
 	overall.setTranslateY(250);
-		categories.setBackground(new Background(new BackgroundFill(
-				Color.MIDNIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
 	return new Scene(categories, 700, 700);
 	}
 
-
 	public Scene gameScene(){
 
 		startWordGame = new Button("Generate Word");
-		helpBtn3 = new Button("Help");
+		help = new Button("Help");
 		currentTitle = new TextField("Current Category:");
-		currentTitle.setMaxWidth(115);
 		currentTitle.setEditable(false);
 		currentCategory = new TextField();
-		currentCategory.setMaxWidth(75);
-		currentCategory.setEditable(false);
 		letterToGuess = new TextField();
-		incorrect = new TextField("Incorrect: ");
+		incorrect = new TextField("Incorrect: \n");
 		wordToGuess = new TextArea("");
 		wordToGuess.setMinHeight(300);
 		checkLetter = new Button("check");
 		currentVBox = new VBox(currentTitle, currentCategory);
+<<<<<<< HEAD
 		testingLose = new Button("Testing Lose");
 		testingWin = new Button("Testing Win");
 		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame, testingWin, testingLose);
 		letterGuessing.setSpacing(20);
+=======
+		currentTop = new HBox(currentVBox, help); //marked as maybe breaking
+		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame);
+>>>>>>> parent of c21c085 (GUI updates)
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
 		wordGuessing.setSpacing(50);
-		wordGuessing.setTranslateY(20);
 		newServer = new Button("Join new server");
 		currentServerTitle = new TextField("current Port Number: ");
 		currentServerTitle.setEditable(false);
@@ -136,12 +135,10 @@ public class JavaFXTemplateClient extends Application {
 		currentServerText.setEditable(false);
 		currentServer = new HBox(currentServerTitle, currentServerText, newServer);
 		gameBorder = new BorderPane();
-		gameBorder.setTop(currentVBox);
+		gameBorder.setTop(currentTop);
 		gameBorder.setCenter(wordGuessing);
 		gameBorder.setBottom(currentServer);
-		gameBorder.setRight(helpBtn3);
-		gameBorder.setBackground(new Background(new BackgroundFill(
-				Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+
 		return new Scene(gameBorder, 700, 700);
 		
 		
@@ -151,7 +148,6 @@ public class JavaFXTemplateClient extends Application {
 
 	public Scene winScene(){
 
-		helpBtn4 = new Button("Help");
 		findNewServer =  new Button("Find a new server");
 		sameServer = new Button("Play again on the same server");
 		winningTitle = new TextField("YOU WIN!!");
@@ -160,29 +156,30 @@ public class JavaFXTemplateClient extends Application {
 		category3 = new TextField("Category 3 word: \n word 3");
 		winningWords = new HBox(category1, category2, category3);
 		serverConnection = new HBox(findNewServer, sameServer);
+		winningTop = new HBox(winningTitle, help);
 		winning = new BorderPane();
-		winning.setTop(winningTitle);
-		winning.setRight(helpBtn4);
+		winning.setTop(winningTop);
 		winning.setCenter(winningWords);
 		winning.setBottom(serverConnection);
-		winning.setBackground(new Background(new BackgroundFill(
-				Color.AQUAMARINE, CornerRadii.EMPTY, Insets.EMPTY)));
+		
 		return new Scene(winning, 700, 700);
 	}
 
 	public Scene loseScene(){
 		TextField loseTitle, loseText;
+		HBox losingBox;
 		BorderPane losing;
-		helpBtn5 = new Button("Help");
+
 		loseTitle = new TextField("BETTER LUCK NEXT TIME!");
 		loseText = new TextField("You did not guess at\n" +
 				"least 1 correct word in\n" +
 				"each category");
+		losingBox = new HBox(loseTitle, help);
 		losing = new BorderPane();
-		losing.setTop(loseTitle);
-		losing.setRight(helpBtn5);
+		losing.setTop(losingBox);
 		losing.setCenter(loseText);
 		losing.setBottom(serverConnection);
+<<<<<<< HEAD
 		losing.setBackground(new Background(new BackgroundFill(
 				Color.DARKCYAN, CornerRadii.EMPTY, Insets.EMPTY)));
 		return new Scene(losing, 700, 700);
@@ -236,6 +233,15 @@ public class JavaFXTemplateClient extends Application {
 		alert.setTitle("Instructions");
 		alert.setHeaderText("Ending Instructions");
 		alert.show();
+=======
+
+		return new Scene(losing, 700, 700);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		launch(args);
+>>>>>>> parent of c21c085 (GUI updates)
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -252,10 +258,13 @@ public class JavaFXTemplateClient extends Application {
 		primaryStage.setScene(sceneMap.get("start"));
 		primaryStage.show();
 
+<<<<<<< HEAD
 		helpBtn1.setOnAction( e -> {
 			instructionHandler();
 		});
 
+=======
+>>>>>>> parent of c21c085 (GUI updates)
 
 		startButton.setOnAction(press2->
 		{
@@ -289,6 +298,7 @@ public class JavaFXTemplateClient extends Application {
 				newClient.start();
 			}
 		});
+<<<<<<< HEAD
 
 
 		helpBtn2.setOnAction( e -> {
@@ -307,6 +317,11 @@ public class JavaFXTemplateClient extends Application {
 			instructionHandler4();
 		});
 
+=======
+		
+		
+
+>>>>>>> parent of c21c085 (GUI updates)
 		newServer.setOnAction(e -> {
 			primaryStage.setScene(sceneMap.get("start"));
 			textfield1.setText("");
@@ -319,7 +334,7 @@ public class JavaFXTemplateClient extends Application {
 			newClient.send(newClient.clientPack); 
 			wordToGuess.setText(newClient.clientPack.encodedWord); //however, this prints out the wrong thing
 			primaryStage.setScene(sceneMap.get("game"));
-			currentServerText.setText(textfield1.getText());
+			currentServerText2.setText(textfield1.getText());
 			currentCategory.setText("Foods");
 			});
 		animals.setOnAction(e->{
@@ -327,17 +342,24 @@ public class JavaFXTemplateClient extends Application {
 			newClient.send(newClient.clientPack);
 			wordToGuess.setText(newClient.clientPack.encodedWord);
 			primaryStage.setScene(sceneMap.get("game"));
-			currentServerText.setText(textfield1.getText());
+			currentServerText2.setText(textfield1.getText());
 			currentCategory.setText("Animals");
 			});
 		countries.setOnAction(e->{
 			newClient.clientPack.categoryChosen = "Countries"; //does NOT cause nullptr exception
 
 			System.out.println("at this point encoded word is: " + newClient.clientPack.encodedWord);
+<<<<<<< HEAD
 			newClient.send(newClient.clientPack);
 			primaryStage.setScene(sceneMap.get("game"));
 //			newClient.send(newClient.clientPack);
 			currentServerText.setText(textfield1.getText());
+=======
+			
+			primaryStage.setScene(sceneMap.get("game"));
+			//newClient.send(newClient.clientPack); 
+			currentServerText2.setText(textfield1.getText());
+>>>>>>> parent of c21c085 (GUI updates)
 			currentCategory.setText("Countries");
 			});
 
