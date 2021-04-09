@@ -2,34 +2,32 @@ import java.io.Serializable;
 
 public class UpdatePack implements Serializable {
 	 //replace these 3 with lists
-    public int animalsAttemps;
-    public int foodAttempts;
-    public int countriesAttempts;
+   public int animalsAttemps;
+   public int foodAttempts;
+   public int countriesAttempts;
 
+   //login, category, game, lose, win
+   public String gameState = "login";
 
+   public char letterGuess;
+   public String wordGuess;
+   public String guessType = "none";
 
-    public char letterGuess;
-    public String wordGuess;
+   public int letterGuessLeft;
+   public int wordGuessLeft;
 
-    public int letterGuessLeft;
-    public int wordGuessLeft;
-
-    public boolean letterCorrect;
-    public boolean wordCorrect;
-    
-    public boolean isLetterGuessing;
-    public boolean isWordGuessing;
-
-    public boolean connectionFail;
-    public boolean replayRequest;
+   public boolean letterCorrect;
+   public boolean wordCorrect;
+   
+   public boolean connectionFail;
+   public boolean replayRequest;
+   
 	
 	
 	
 	String categoryChosen = "none";
-	    	String encodedWord = "no word provided";
-	    	int WordID;
-	    	char chosenChar = ' ';
-	    	int incorrectguesses = 0;
+	String encodedWord = "no word provided";
+	int WordID;
 	    	
 	    	//change to string to consider more scenarios, like all words exhausted and failed.
 		    public boolean animalsDone;
@@ -40,5 +38,19 @@ public class UpdatePack implements Serializable {
 	    	UpdatePack()
 	    	{
 	    		
+	    	}
+	    	
+	    	public Boolean isAllAlNum(String testWord)
+	    	{
+	    		char[] tempWord = testWord.toCharArray();
+	    		for(int i = 0; i < tempWord.length; i++) 
+	    		{
+	    			if(!Character.isLetter(tempWord[i]))
+	    			{
+	    				return false;
+	    			}
+	
+	    		}
+	    		return true;
 	    	}
 	    }

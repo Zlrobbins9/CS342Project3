@@ -91,14 +91,14 @@ public class GameServer{
 
             while(true) {
                 try {
-                    UpdatePack data = (UpdatePack) in.readObject();
+                    thisGameManager.sendingPack = (UpdatePack) in.readObject();
                     
-                    if(data.categoryChosen != "none" && thisGameManager.sendingPack.categoryChosen == "none")//the client has chosen a category
+                    if(thisGameManager.sendingPack.categoryChosen != "none" && thisGameManager.sendingPack.guessType == "none")//the client has chosen a category
                     {
-                    	callback.accept("the category chosen by client " + count + " was " + data.categoryChosen);
-                    	thisGameManager.sendingPack.categoryChosen = data.categoryChosen;
+                    	callback.accept("the category chosen by client " + count + " was " + thisGameManager.sendingPack.categoryChosen);
+                    	thisGameManager.sendingPack.categoryChosen = thisGameManager.sendingPack.categoryChosen;
                     	System.out.println("the category chosen by client " + count + " was " + thisGameManager.sendingPack.categoryChosen);
-                    	thisGameManager.decodedWord = thisGameManager.getWord(thisGameManager.CategoryMap.get(data.categoryChosen));
+                    	thisGameManager.decodedWord = thisGameManager.getWord(thisGameManager.CategoryMap.get(thisGameManager.sendingPack.categoryChosen));
                     	thisGameManager.encodeDecodedWord();
                     	System.out.println("encoded word is: " + thisGameManager.sendingPack.encodedWord + ", decoded word is " + thisGameManager.decodedWord);
                     	try {
@@ -106,10 +106,18 @@ public class GameServer{
                     	out.flush();
                     	out.reset();
                     	}catch(Exception e) {}
+                    }else if(thisGameManager.sendingPack.guessType != "none") //the player is guessing a letter or word
+                    {
+                    	if(thisGameManager.sendingPack.guessType == "String")
+                    	{
+                    		
+                    	}else
+                    	{
+                    		
+                    	}
                     }
                     //callback.accept("client: " + count + " sent: " + data);
                     
-                    //updateClients("client #"+count+" selected: "+data.categoryChosen);
                 }
                 catch(Exception e) {
                     callback.accept("OOOOPPs...Something wrong with the socket from client: " + count + "....closing down!");

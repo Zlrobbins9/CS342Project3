@@ -6,10 +6,12 @@ public class UpdatePack implements Serializable {
     public int foodAttempts;
     public int countriesAttempts;
 
-
+    //login, category, game, lose, win
+    public String gameState = "login";
 
     public char letterGuess;
     public String wordGuess;
+    public String guessType = "none";
 
     public int letterGuessLeft;
     public int wordGuessLeft;
@@ -17,9 +19,6 @@ public class UpdatePack implements Serializable {
     public boolean letterCorrect;
     public boolean wordCorrect;
     
-    public boolean isLetterGuessing;
-    public boolean isWordGuessing;
-
     public boolean connectionFail;
     public boolean replayRequest;
     
@@ -27,10 +26,8 @@ public class UpdatePack implements Serializable {
 	
 	
 	String categoryChosen = "none";
-	    	String encodedWord = "no word provided";
-	    	int WordID;
-	    	char chosenChar = ' ';
-	    	int incorrectguesses = 0;
+	String encodedWord = "no word provided";
+	int WordID;
 	    	
 	    	//change to string to consider more scenarios, like all words exhausted and failed.
 		    public boolean animalsDone;
@@ -41,5 +38,19 @@ public class UpdatePack implements Serializable {
 	    	UpdatePack()
 	    	{
 	    		
+	    	}
+	    	
+	    	public Boolean isAllAlNum(String testWord)
+	    	{
+	    		char[] tempWord = testWord.toCharArray();
+	    		for(int i = 0; i < tempWord.length; i++) 
+	    		{
+	    			if(!Character.isLetter(tempWord[i]))
+	    			{
+	    				return false;
+	    			}
+	
+	    		}
+	    		return true;
 	    	}
 	    }

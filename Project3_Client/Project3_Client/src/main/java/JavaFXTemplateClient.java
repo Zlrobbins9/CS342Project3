@@ -115,7 +115,7 @@ public class JavaFXTemplateClient extends Application {
 		currentTop = new HBox(currentVBox, help); //marked as maybe breaking
 		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame);
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
-		wordGuessing.setSpacing(50);
+		wordGuessing.setSpacing(200);
 		newServer = new Button("Join new server");
 		currentServerTitle = new TextField("current Port Number: ");
 		currentServerTitle.setEditable(false);
@@ -256,7 +256,7 @@ public class JavaFXTemplateClient extends Application {
 			System.out.println("at this point encoded word is: " + newClient.clientPack.encodedWord);
 			
 			primaryStage.setScene(sceneMap.get("game"));
-			//newClient.send(newClient.clientPack); 
+			newClient.send(newClient.clientPack); 
 			currentServerText2.setText(textfield1.getText());
 			currentCategory.setText("Countries");
 			});
@@ -264,6 +264,27 @@ public class JavaFXTemplateClient extends Application {
 		startWordGame.setOnAction(e -> {
 			newClient.send(newClient.clientPack);
 			wordToGuess.setText(newClient.clientPack.encodedWord);
+			startWordGame.setDisable(true);
+		});
+		
+		checkLetter.setOnAction(e -> {
+			System.out.println(letterToGuess.getText());
+			if(newClient.clientPack.isAllAlNum(letterToGuess.getText())) // determines there are only letters in a given String/char.
+			{
+				if(letterToGuess.getText().length() == 1) //input is char
+				{
+					newClient.clientPack.guessType = "char";
+					newClient.clientPack.letterGuess = letterToGuess.getText().charAt(0);
+				}else //input is string
+				{
+					newClient.clientPack.guessType = "String";
+					newClient.clientPack.wordGuess = letterToGuess.getText();
+				}
+				newClient.send(newClient.clientPack);
+			}else
+			{
+				System.out.println("error: invalid character, please try again.");
+			}
 			
 		});
 	}
