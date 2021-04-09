@@ -11,6 +11,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+//add titles "Zacc and Nurs Word Guessing Game" maybe add client or server
+//figure out help scenes
+//fix up win/lose scenes -> add a temporary button that I will then remove
 public class JavaFXTemplateServer extends Application {
 
 	public static void main(String[] args) {

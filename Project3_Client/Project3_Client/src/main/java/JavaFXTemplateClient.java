@@ -7,8 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -24,7 +24,7 @@ public class JavaFXTemplateClient extends Application {
 	TextArea textfield1, wordToGuess, title;
 	BorderPane connectingbox, categories, gameBorder, winning;
 	Button helpBtn1, helpBtn2, helpBtn3, helpBtn4, helpBtn5, startButton, foods, animals, countries, newServer, newServer2, checkLetter,
-			findNewServer, sameServer, wordStart, startWordGame, back1, back2;
+			findNewServer, sameServer, wordStart, startWordGame, testingWin, testingLose;
 	TextField address, foodsText, animalsText, countriesText,
 			currentServerTitle, currentServerTitle2, currentServerText, currentServerText2, currentTitle, currentCategory,
 			letterToGuess, incorrect, winningTitle, category1, category2, category3;
@@ -122,7 +122,9 @@ public class JavaFXTemplateClient extends Application {
 		wordToGuess.setMinHeight(300);
 		checkLetter = new Button("check");
 		currentVBox = new VBox(currentTitle, currentCategory);
-		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame);
+		testingLose = new Button("Testing Lose");
+		testingWin = new Button("Testing Win");
+		letterGuessing = new HBox(letterToGuess, checkLetter, startWordGame, testingWin, testingLose);
 		letterGuessing.setSpacing(20);
 		wordGuessing = new VBox(wordToGuess, letterGuessing, incorrect);
 		wordGuessing.setSpacing(50);
@@ -186,58 +188,55 @@ public class JavaFXTemplateClient extends Application {
 		return new Scene(losing, 700, 700);
 	}
 
-	public Scene helpScene1(){
-		TextArea instructions1 = new TextArea("To start the game, you must first connect the" +
-				" server to any port number of your liking. In order for the Server and the Client to be" +
-				" connected properly, please enter the exact same port number to the text box below.");
-		instructions1.setWrapText(true);
-		Button back1 = new Button("Back");
-		BorderPane helpPane1 = new BorderPane();
-		helpPane1.setTop(instructions1);
-		instructions1.setTranslateY(75);
-		helpPane1.setCenter(back1);
-		return new Scene(helpPane1,400,400);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		launch(args);
+	}
+	public void instructionHandler() {
+		String a = String.format("To start the game, you must first connect the" +
+						" server to any port number of your liking. In order for the Server and the Client to be" +
+						" connected properly, please enter the exact same port number to the text box below.");
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, a);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.setTitle("Instructions");
+		alert.setHeaderText("Connection Instructions");
+		alert.show();
 	}
 
-	public Scene helpScene2(){
-		TextArea instructions2 = new TextArea("Continuing, you must choose a Category. You have 3 tries" +
+	public void instructionHandler2() {
+		String a = String.format("Continuing, you must choose a Category. You have 3 tries" +
 				" in each category. You must only get 1 word correct in each category to win this game." +
 				" After all 3 attempts are used in a singular category, you will not be able to continue the game.");
-
-		instructions2.setWrapText(true);
-		Button back2 = new Button("Back");
-		BorderPane helpPane2 = new BorderPane();
-		helpPane2.setTop(instructions2);
-		instructions2.setTranslateY(75);
-		helpPane2.setCenter(back1);
-		return new Scene(helpPane2,400,400);
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, a);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.setTitle("Instructions");
+		alert.setHeaderText("Category Instructions");
+		alert.show();
 	}
 
-	public Scene helpScene3(){
-		TextArea instructions3 = new TextArea("Now you can actually play your game. In order to receive" +
+	public void instructionHandler3() {
+		String a = String.format( "Now you can actually play your game. In order to receive" +
 				" a word to guess, you must press the generate word button. After you receive the word you " +
 				"must guess, you can input a letter or an entire word into the small box next to the check button" +
 				" if it is correct, the letter will replace the dash. If it is incorrect, the incorrect letter" +
 				" will show up in the incorrect letters box. After 6 incorrect letter guesses, you fail to correctly" +
 				" guess the word. You then must generate a new word.");
-		instructions3.setWrapText(true);
-		Button back3 = new Button("Back");
-		BorderPane helpPane3 = new BorderPane();
-		helpPane3.setTop(instructions3);
-		instructions3.setTranslateY(75);
-		helpPane3.setCenter(back1);
-		return new Scene(helpPane3,400,400);
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, a);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.setTitle("Instructions");
+		alert.setHeaderText("Game Instructions");
+		alert.show();
 	}
 
-//	public Scene helpScene4(){
-//
-//	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		launch(args);
+	public void instructionHandler4() {
+		String a = String.format( "If you would like to play again, you can either continue to play on this " +
+				"server or you could pick a new server");
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, a);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.setTitle("Instructions");
+		alert.setHeaderText("Ending Instructions");
+		alert.show();
 	}
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -248,20 +247,13 @@ public class JavaFXTemplateClient extends Application {
 		sceneMap.put("start", startingScene());
 		sceneMap.put("win", winScene());
 		sceneMap.put("lose", loseScene());
-		sceneMap.put("help 1",helpScene1());
-		sceneMap.put("help 2",helpScene2());
-//		sceneMap.put("help 3",helpScene3());
-//		sceneMap.put("help 4",helpScene4());
 
 		Scene scene = new Scene(new VBox(), 700,700);
 		primaryStage.setScene(sceneMap.get("start"));
 		primaryStage.show();
 
 		helpBtn1.setOnAction( e -> {
-			primaryStage.setScene(sceneMap.get("help 1"));
-			back1.setOnAction( p -> {
-				primaryStage.setScene(sceneMap.get("start"));
-			});
+			instructionHandler();
 		});
 
 
@@ -297,15 +289,24 @@ public class JavaFXTemplateClient extends Application {
 				newClient.start();
 			}
 		});
-		
-		
-		helpBtn2.setOnAction(e -> {
-			primaryStage.setScene(sceneMap.get("help 2"));
-			back2.setOnAction(p -> {
-				primaryStage.setScene(sceneMap.get("start"));
-			});
 
+
+		helpBtn2.setOnAction( e -> {
+			instructionHandler2();
 		});
+
+		helpBtn3.setOnAction( e -> {
+			instructionHandler3();
+		});
+
+		helpBtn4.setOnAction( e -> {
+			instructionHandler4();
+		});
+
+		helpBtn5.setOnAction( e -> {
+			instructionHandler4();
+		});
+
 		newServer.setOnAction(e -> {
 			primaryStage.setScene(sceneMap.get("start"));
 			textfield1.setText("");
@@ -331,15 +332,15 @@ public class JavaFXTemplateClient extends Application {
 			});
 		countries.setOnAction(e->{
 			newClient.clientPack.categoryChosen = "Countries"; //does NOT cause nullptr exception
-			
+
 			System.out.println("at this point encoded word is: " + newClient.clientPack.encodedWord);
-			
-			primaryStage.setScene(sceneMap.get("game"));
 			newClient.send(newClient.clientPack);
+			primaryStage.setScene(sceneMap.get("game"));
+//			newClient.send(newClient.clientPack);
 			currentServerText.setText(textfield1.getText());
 			currentCategory.setText("Countries");
 			});
-		
+
 		startWordGame.setOnAction(e -> {
 			newClient.send(newClient.clientPack);
 			wordToGuess.setText(newClient.clientPack.encodedWord);
