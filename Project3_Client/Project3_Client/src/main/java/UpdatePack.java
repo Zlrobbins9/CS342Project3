@@ -1,12 +1,11 @@
 import java.io.Serializable;
 
 public class UpdatePack implements Serializable {
-	//replace these 3 with lists
 	public int animalsAttemps;
 	public int foodAttempts;
 	public int countriesAttempts;
 
-	//login, category, game, lose, win
+	//login, category, game, lose, win, do we use this? i dont think so. -z
 	public String gameState = "login";
 
 	public char letterGuess;

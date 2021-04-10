@@ -77,6 +77,19 @@ public class ServerGameManager{
 	        }
 	        return false;
 	    }
+	    
+	    String partiallyDecodeWord(String decodedWord, String codedWord, char charGuess)
+	    {
+	    	char[] tempWord = codedWord.toCharArray();
+    		for(int i = 0; i < tempWord.length; i++) 
+    		{
+                if(decodedWord.charAt(i) == charGuess) 
+                {
+                	tempWord[i] = charGuess;
+                }
+            }
+    		return String.valueOf(tempWord);
+	    }
 
 	}
 

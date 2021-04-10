@@ -381,25 +381,44 @@ public class JavaFXTemplateClient extends Application {
 		});
 
 		checkLetter.setOnAction(e -> {
-			System.out.println(letterToGuess.getText());
-			if(newClient.clientPack.isAllAlNum(letterToGuess.getText())) // determines there are only letters in a given String/char.
+			System.out.println("before lowercaseification, input is: " + letterToGuess.getText());
+			//TODO: lowercaseify all chars of input
+			//TODO; set error message for empty input.
+			if(newClient.clientPack.isAllAlNum(letterToGuess.getText())) // determines there are only letters in text lettertoget.
 			{
+				letterToGuess.setText(lowercaseify(letterToGuess.getText())); //NEW: changes the input to all lowercase
+				System.out.println("after lowercaseification, input is: " + letterToGuess.getText());
 				if(letterToGuess.getText().length() == 1) //input is char
 				{
 					newClient.clientPack.guessType = "char";
 					newClient.clientPack.letterGuess = letterToGuess.getText().charAt(0);
-				}else //input is string
+					newClient.send(newClient.clientPack);
+				}else if(letterToGuess.getText().length() > 1) //input is string
 				{
 					newClient.clientPack.guessType = "String";
 					newClient.clientPack.wordGuess = letterToGuess.getText();
+					newClient.send(newClient.clientPack);
+				}else //no input
+				{
+					System.out.println("error: nothing is inputted! >:(");
 				}
-				newClient.send(newClient.clientPack);
+				
 			}else
 			{
 				System.out.println("error: invalid character, please try again.");
 			}
 
 		});
+	}
+	
+	String lowercaseify(String upperString)
+	{
+		char[] tempWord = upperString.toCharArray();
+		for(int i = 0; i < tempWord.length; i++) 
+		{
+			tempWord[i] = Character.toLowerCase(tempWord[i]);
+        }
+		return String.valueOf(tempWord);
 	}
 
 

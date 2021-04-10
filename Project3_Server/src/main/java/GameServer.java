@@ -112,9 +112,25 @@ public class GameServer{
                     {
                     	if(thisGameManager.sendingPack.guessType == "String")
                     	{
-                    		
+                    		if(thisGameManager.decodedWord == thisGameManager.sendingPack.wordGuess) 
+                    		{
+                    			thisGameManager.sendingPack.wordCorrect = true;
+                    			//TODO: add a game progress tracker variable
+                    		}else
+                    		{
+                    			thisGameManager.sendingPack.wordCorrect = false;
+                    		}
                     	}else
                     	{
+                    		if(thisGameManager.checkLetterExists(thisGameManager.decodedWord, thisGameManager.sendingPack.letterGuess))
+                    		{
+                    			thisGameManager.sendingPack.encodedWord = thisGameManager.partiallyDecodeWord(thisGameManager.decodedWord,thisGameManager.sendingPack.encodedWord,thisGameManager.sendingPack.letterGuess);
+                    			thisGameManager.sendingPack.letterCorrect = true;
+                    		}else
+                    		{
+                    			thisGameManager.sendingPack.letterCorrect = false;
+                    			//TODO: add a game LOSS tracker variable
+                    		}
                     		
                     	}
                     }
