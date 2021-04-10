@@ -21,7 +21,9 @@ public class UpdatePack implements Serializable {
    
    public boolean connectionFail;
    public boolean replayRequest;
-   
+   public boolean choosingCategory;
+   public boolean isPlayingGame;
+   public boolean wordSent;
 	
 	
 	
@@ -37,7 +39,8 @@ public class UpdatePack implements Serializable {
 	    	private static final long serialVersionUID = 1L;
 	    	UpdatePack()
 	    	{
-	    		
+	    		isPlayingGame = false;
+	    		choosingCategory = false;
 	    	}
 	    	
 	    	public Boolean isAllAlNum(String testWord)
