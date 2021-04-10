@@ -39,7 +39,7 @@ public class GameServer{
                 while(true) {
                 	System.out.println("Server is waiting for the next client...");
                     ClientThread c = new ClientThread(mysocket.accept(), count);
-                    callback.accept("client has connected to server: " + "client #" + count);
+                    //callback.accept("client has connected to server: " + "client #" + count);
                     System.out.println("client has connected to server: " + "client #" + count);
                     clients.add(c);
                     clientMap.put(c, new ServerGameManager());
@@ -92,8 +92,8 @@ public class GameServer{
             while(true) {
                 try {
                     thisGameManager.sendingPack = (UpdatePack) in.readObject();
-                    //callback.accept(thisGameManager.sendingPack.categoryChosen);
-                    if(thisGameManager.sendingPack.categoryChosen != "none" && thisGameManager.sendingPack.choosingCategory && !thisGameManager.sendingPack.isPlayingGame)//the client has chosen a category
+                    
+                    if(thisGameManager.sendingPack.categoryChosen != "none" && thisGameManager.sendingPack.guessType == "none")//the client has chosen a category
                     {
                     	callback.accept("the category chosen by client " + count + " was " + thisGameManager.sendingPack.categoryChosen);
                     	thisGameManager.sendingPack.categoryChosen = thisGameManager.sendingPack.categoryChosen;
@@ -106,9 +106,7 @@ public class GameServer{
                     	out.flush();
                     	out.reset();
                     	}catch(Exception e) {}
-                    }else if (thisGameManager.sendingPack.wordSent == true) {
-                        callback.accept("an encoded word has been sent to client " + count);
-                    } else if(thisGameManager.sendingPack.guessType != "none") //the player is guessing a letter or word
+                    }else if(thisGameManager.sendingPack.guessType != "none") //the player is guessing a letter or word
                     {
                     	if(thisGameManager.sendingPack.guessType == "String")
                     	{

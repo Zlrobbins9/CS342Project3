@@ -40,7 +40,7 @@ public class ServerGameManager{
 	    		sendingPack.encodedWord = getWord(CategoryMap.get(sendingPack.categoryChosen));
 	    	}
 	    	
-	    	if(!checkLetterExists(sendingPack.encodedWord,'-'))
+	    	if(!checkLetterExists(sendingPack.encodedWord,'_'))
 	    	{
 	    		
 	    	}
@@ -60,7 +60,7 @@ public class ServerGameManager{
     		{
                 if(tempWord[i] != ' ') 
                 {
-                	tempWord[i] = '-';
+                	tempWord[i] = '_';
                 }
             }
     		sendingPack.encodedWord = String.valueOf(tempWord);
