@@ -48,18 +48,28 @@ public class JavaFXTemplateClient extends Application {
 		//textfield1.setTranslateY(200);
 
 		connectingbox = new BorderPane();
-
-		connectingbox.setTop(textfield1);
+		TextField screenTitle = new TextField("Nur and Zacc's Guessing Game - Client");
+//		screenTitle.setWrapText(true);
+		screenTitle.setMaxWidth(400);
+		screenTitle.setMaxHeight(75);
+		screenTitle.setAlignment(Pos.CENTER);
+		screenTitle.setStyle("-fx-font: 20 arial;");
+		VBox title = new VBox(screenTitle, textfield1);
+		title.setSpacing(50);
+		connectingbox.setTop(title);
 		connectingbox.setLeft(startButton);
 		connectingbox.setCenter(address);
 		connectingbox.setRight(helpBtn1);
 		//helpBtn1.setTranslateX(50);
 		address.setMaxWidth(200);
+		title.setTranslateY(175);
+		title.setTranslateX(200);
+		//textfield1.setTranslateX(50);
 		//address.setTranslateX(50);
 		startButton.setTranslateY(400);
 		startButton.setTranslateX(350);
-		textfield1.setTranslateY(200);
-		textfield1.setTranslateX(275);
+		//textfield1.setTranslateY(200);
+		textfield1.setTranslateX(50);
 		textfield1.setMaxHeight(50);
 		textfield1.setMaxWidth(200);
 		connectingbox.setBackground(new Background(new BackgroundFill(
